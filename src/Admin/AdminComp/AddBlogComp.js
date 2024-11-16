@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-
+import Firebase, { storage } from '../../Firebase'
 const AddBlogComp = () => {
     const [obj, setobj] = useState({})
     const [inputs, setinputs] = useState([])
@@ -7,6 +7,7 @@ const AddBlogComp = () => {
     const multipleimage=useRef()
     const[images,setimages]=useState([])
     const[imageserror,setimageserror]=useState(null)
+    const[btndisable,setbtndisable]=useState(false)
     const[headingimage,setheadingimage]=useState(null)
     const set = (event) => {
         setobj({ ...obj, [event.target.name]: event.target.value })
@@ -75,19 +76,55 @@ const AddBlogComp = () => {
         images.splice(index,1)
         setimages([...images])
     } 
-    const Submit=(e)=>{
+    async function Submit(e){
+       try {
         e.preventDefault()
+        setbtndisable(true)
         if(!obj.Title ||!obj.Description ||!obj.Heading ||!obj.Author ||!obj.Category ||!obj.Tags ||!obj.Status) return alert("Field is empty")
-            
         if(!headingimage)return alert("Upload headingimage first")
         
-        
-        
-        
-        if(images.length!==0){
-        console.log(images);
-        
+        let count=0
+        for(let i=0;i<inputs.length;i++){
+            if(!inputs[i].Sub_Heading ||!inputs[i].Sub_Heading_Description){
+                count=count+1
+            }
         }
+          if(count>0) return alert("Some field are empty in sub heading part")
+        
+            //Save heading image in storage(firebase)   
+          const fileRef=storage.child(headingimage.name)
+          await fileRef.put(headingimage)
+          const url=await fileRef.getDownloadURL()
+          const path=fileRef.fullPath
+          const headobject={url,path}
+
+          let mydata={...obj,"HeadingImage":headobject,"SubHeadingsData":inputs}
+           //additional images(optional  for save)
+           if(images.length>0){
+            let myarray=[]
+            for (let j=0;j<images.length;j++){
+                const fileRefs= storage.child(images[j].name)
+                await fileRefs.put(images[j])
+                const urls= await fileRefs.getDownloadURL()
+                const paths=fileRefs.fullPath 
+                myarray.push({urls,paths}) 
+            }
+            mydata={...mydata,"Images":myarray}
+           }
+            Firebase.child("Blogs").push(mydata,err=>{
+            if(err) return alert("Something went wrong. Try again later")
+            else return alert("Blog Uploaded")
+          })
+
+       } catch (error) {
+          return alert("Something went wrong. Try again later")
+       }finally{
+        setobj({})
+        setheadingimage(null)
+        setimages([])
+        setinputs([]) 
+        setbtndisable(false)    
+       }
     }   
         
     return (
@@ -178,7 +215,7 @@ const AddBlogComp = () => {
                                     }
                                     <div className="col-lg-12 mt-4">
                                         <div className="form-group mb-0">
-                                            <button type="submit" onClick={Submit} className="btn-one">Submit<i className="flaticon-right-arrow" /></button>
+                                            <button type="submit" disabled={btndisable} onClick={Submit} className="btn-one">Submit<i className="flaticon-right-arrow" /></button>
                                         </div>
                                     </div>
                                 </div>
