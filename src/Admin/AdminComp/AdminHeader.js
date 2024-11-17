@@ -35,13 +35,13 @@ function Logout()
                             <div className="collapse navbar-collapse">
                                 <ul className="navbar-nav mx-auto">
                                     <li className="nav-item">
-                                        <Link to={'/Blogs'} className="nav-link active">Our Blogs</Link>
+                                        <Link to={'/Admin'} className="nav-link active">Our Blogs</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to={'/AddBlog'} className="nav-link">Add Blog</Link>
+                                        <Link to={'/Admin/AddBlog'} className="nav-link">Add Blog</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to={'/MyAccount'} className="nav-link">My Account</Link>
+                                        <Link to={'/Admin/MyAccount'} className="nav-link">My Account</Link>
                                     </li>
                                     <li className="nav-item">
                                         <a onClick={Logout} className="nav-link">

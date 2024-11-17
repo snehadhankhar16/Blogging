@@ -1,14 +1,18 @@
 import React, { useRef, useState } from 'react'
 import Firebase, { storage } from '../../Firebase'
+import { useNavigate } from 'react-router-dom'
 const AddBlogComp = () => {
     const [obj, setobj] = useState({})
     const [inputs, setinputs] = useState([])
     const image=useRef()
     const multipleimage=useRef()
+    const navigate=useNavigate()
     const[images,setimages]=useState([])
     const[imageserror,setimageserror]=useState(null)
     const[btndisable,setbtndisable]=useState(false)
+    const[loader,setloader]=useState(false)
     const[headingimage,setheadingimage]=useState(null)
+    
     const set = (event) => {
         setobj({ ...obj, [event.target.name]: event.target.value })
     }
@@ -80,6 +84,7 @@ const AddBlogComp = () => {
        try {
         e.preventDefault()
         setbtndisable(true)
+        setloader(true)
         if(!obj.Title ||!obj.Description ||!obj.Heading ||!obj.Author ||!obj.Category ||!obj.Tags ||!obj.Status) return alert("Field is empty")
         if(!headingimage)return alert("Upload headingimage first")
         
@@ -90,7 +95,12 @@ const AddBlogComp = () => {
             }
         }
           if(count>0) return alert("Some field are empty in sub heading part")
-        
+          const user=JSON.parse(localStorage.getItem("Users"))
+          if(!user) {
+             alert ("Unauthorised user")
+             window.history.replaceState(null,null,"/Login")
+             return navigate("/",{replace:true})}
+
             //Save heading image in storage(firebase)   
           const fileRef=storage.child(headingimage.name)
           await fileRef.put(headingimage)
@@ -111,11 +121,11 @@ const AddBlogComp = () => {
             }
             mydata={...mydata,"Images":myarray}
            }
-            Firebase.child("Blogs").push(mydata,err=>{
+            Firebase.child("Blogs").child(user).push(mydata,err=>{
             if(err) return alert("Something went wrong. Try again later")
             else return alert("Blog Uploaded")
           })
-
+          setTimeout(() => navigate("/Blogs"),1500);
        } catch (error) {
           return alert("Something went wrong. Try again later")
        }finally{
@@ -124,13 +134,18 @@ const AddBlogComp = () => {
         setimages([])
         setinputs([]) 
         setbtndisable(false)    
+        setloader(false)
        }
     }   
         
     return (
         <div>
+            
             <div className="checkout-wrap ptb-100">
                 <div className="container">
+                    {
+                        loader && <div className='preloaders'><div className='loaders'></div></div>
+                    }
                     <div className="row">
                         <div className="col-xxl-8 col-xl-7 col-lg-7">
                             <form action="#" className="checkout-form">
@@ -172,11 +187,11 @@ const AddBlogComp = () => {
                                                     <span style={{fontSize:"20px"}}>Status:</span>
                                                 </div>
                                                 <div>
-                                                    <input type="radio" onClick={radiocheck} id="Active" name="Status" />
+                                                    <input type="radio" onClick={radiocheck} checked={obj.Status=='Active'?true:false} id="Active" name="Status" />
                                                     <label  htmlFor="Active">Active</label>
                                                 </div>
                                                 <div>
-                                                    <input type="radio" onClick={radiocheck} id="In-Active" name="Status" />
+                                                    <input type="radio" onClick={radiocheck} checked={obj.Status=='In-Active'?true:false} id="In-Active" name="Status" />
                                                     <label  htmlFor="In-Active">In-Active</label>
                                                 </div>
                                             </div>
@@ -186,7 +201,7 @@ const AddBlogComp = () => {
                                 </div>
                                 <div className="col-lg-6">
                                         <div className="form-group">
-                                            <input type="text" name="Tags" onChange={set} value={obj.Tags ? obj.Tags : ""} placeholder="Enter your Tags" />
+                                            <input type="text" name="Tags" onChange={set} value={obj.Tags ? obj.Tags : ""} placeholder="Enter your Tags separated by commas" />
                                         </div>
                                     </div>
                                     <div className="col-lg-6">
