@@ -4,6 +4,7 @@ import { auth } from '../Firebase'
 const Login = () => {
 const[Obj,SetObj]=useState({})
 const[btndisable,setbtndisable]=useState(false)
+const[loader,setloader]=useState(false)
 const navigate=useNavigate()
 
 function set(event)
@@ -20,6 +21,7 @@ async function Submit(e)
  try{
     e.preventDefault()
     setbtndisable(true)
+    setloader(true)
     if(!Obj.Email || !Obj.Password)return("Field is empty")
     const response=EmailChange(Obj.Email)
     if(!response) return alert("Email isn't valid ")
@@ -33,12 +35,16 @@ async function Submit(e)
  }
  finally{
     setbtndisable(false)
+    setloader(false)
  }
 }//submit fun close
 
   
     return (
         <div className="login-wrap">
+      {
+        loader && <div className='preloaders'><div className='loaders'></div></div>
+      }
                 <div className="login-bg">
                     <a href="index.html" className="navbar-brand">
                         <img className="logo-light" src="assets/img/logo-white.webp" alt="Image" />

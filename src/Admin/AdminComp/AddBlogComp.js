@@ -4,17 +4,18 @@ import { useNavigate } from 'react-router-dom'
 const AddBlogComp = () => {
     const [obj, setobj] = useState({})
     const [inputs, setinputs] = useState([])
-    const image=useRef()
-    const multipleimage=useRef()
-    const navigate=useNavigate()
     const[images,setimages]=useState([])
     const[imageserror,setimageserror]=useState(null)
     const[btndisable,setbtndisable]=useState(false)
     const[loader,setloader]=useState(false)
     const[headingimage,setheadingimage]=useState(null)
+    const image=useRef()
+    const multipleimage=useRef()
+    const navigate=useNavigate()
+    
     
     const set = (event) => {
-        setobj({ ...obj, [event.target.name]: event.target.value })
+        setobj({ ...obj, [event.target.name]: event.target.value ,"Date":Date.now()})
     }
     const Create = () => {
         if (inputs.length < 10) {
@@ -40,7 +41,7 @@ const AddBlogComp = () => {
         const ext=file.type.split("/")
         if(ext[0]!=="image") return alert(" Only Image Supported")
 
-        if(ext[1]=="png" ||ext[1]=="jpeg" ||ext[1]=="jpg" ||ext[1]=="PNG")
+        if(ext[1]=="png" ||ext[1]=="jpeg" ||ext[1]=="jpg" ||ext[1]=="PNG" ||ext[1]=="webp")
         {
          return setheadingimage(file)
         }
@@ -187,11 +188,11 @@ const AddBlogComp = () => {
                                                     <span style={{fontSize:"20px"}}>Status:</span>
                                                 </div>
                                                 <div>
-                                                    <input type="radio" onClick={radiocheck} checked={obj.Status=='Active'?true:false} id="Active" name="Status" />
+                                                    <input type="radio" onClick={radiocheck} readOnly={true} checked={obj.Status=='Active'?true:false} id="Active" name="Status" />
                                                     <label  htmlFor="Active">Active</label>
                                                 </div>
                                                 <div>
-                                                    <input type="radio" onClick={radiocheck} checked={obj.Status=='In-Active'?true:false} id="In-Active" name="Status" />
+                                                    <input type="radio" onClick={radiocheck} readOnly={true} checked={obj.Status=='In-Active'?true:false} id="In-Active" name="Status" />
                                                     <label  htmlFor="In-Active">In-Active</label>
                                                 </div>
                                             </div>
@@ -242,7 +243,7 @@ const AddBlogComp = () => {
                                         <h4 className='cart-box-title'>Heading image</h4>
                                         <div className='cart-total'>
                                             <div className='cart-total-wrap'>
-                                                <img className='img-thumbnail' height={'100%'} width={'100%'} src={headingimage?URL.createObjectURL(headingimage):'assets/img/skill-bg.webp'} alt=''/>
+                                                <img className='img-thumbnail' height={'100%'} width={'100%'} src={headingimage?URL.createObjectURL(headingimage):'/assets/img/skill-bg.webp'} alt=''/>
                                                 </div>
                                                 <input type='file' onChange={upload} accept='image/*' hidden ref={image}/>
                                             <a className='btn-two w-100 d-block' onClick={()=>image.current.click()}>Upload Heading image <i className='flaticon-right-arrow' /></a>

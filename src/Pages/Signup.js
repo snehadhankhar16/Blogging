@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Firebase ,{ auth } from '../Firebase'
 
 const Signup = () => {
   const[Obj,SetObj]=useState({})
   const[btndisable,setbtndisable]=useState(false)
+  const[loader,setloader]=useState(false)
+  const navigate=useNavigate()
   const d =new Date()
   const date=`${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}`
 
@@ -27,6 +29,7 @@ const Signup = () => {
     try {
     e.preventDefault()
     setbtndisable(true)
+    setloader(true)
     if (!Obj.Name || !Obj.Email || !Obj.Password || !Obj.ConfirmPassword) return alert("field is empty")
     var response=EmailChange(Obj.Email)
     if(!response) return alert("email address invalid")
@@ -46,12 +49,17 @@ const Signup = () => {
     return alert("Account related to this Email is already exist")
     }finally{
       setbtndisable(false)
+      setloader(false)
+      navigate("/")
     }
   } 
   
 
   return (
     <div className="login-wrap">
+      {
+        loader && <div className='preloaders'><div className='loaders'></div></div>
+      }
   <div className="login-bg">
     <a  className="navbar-brand">
       <img className="logo-light" src="assets/img/logo-white.webp" alt="Image" />
