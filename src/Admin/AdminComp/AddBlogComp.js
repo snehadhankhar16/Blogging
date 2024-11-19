@@ -243,7 +243,7 @@ const AddBlogComp = () => {
                                         <h4 className='cart-box-title'>Heading image</h4>
                                         <div className='cart-total'>
                                             <div className='cart-total-wrap'>
-                                                <img className='img-thumbnail' height={'100%'} width={'100%'} src={headingimage?URL.createObjectURL(headingimage):'/assets/img/skill-bg.webp'} alt=''/>
+                                                <img className='img-thumbnail' height={'100%'} width={'100%'} src={headingimage?URL.createObjectURL(headingimage):'/assets/img/images.png'} alt=''/>
                                                 </div>
                                                 <input type='file' onChange={upload} accept='image/*' hidden ref={image}/>
                                             <a className='btn-two w-100 d-block' onClick={()=>image.current.click()}>Upload Heading image <i className='flaticon-right-arrow' /></a>
@@ -256,7 +256,7 @@ const AddBlogComp = () => {
                                     images.map(function(Obj,index){
                                         return(
                                             <div key={index} className='myimages'>
-                                            <img src={Obj?URL.createObjectURL(Obj):"assets/img/skill-bg.webp"} alt=''></img>
+                                            <img src={Obj?URL.createObjectURL(Obj):"/assets/img/images.png"} alt=''></img>
                                             <i onClick={()=>Remove(index)}>&times;</i>
                                         </div>
                                         )

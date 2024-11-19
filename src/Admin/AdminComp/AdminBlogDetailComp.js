@@ -13,7 +13,7 @@ const AdminBlogDetailComp = (props) => {
                         <div className="col-lg-8">
                             <article>
                                 <div className="news-img">
-                                    <img loading='lazy' src="props?.data?.HeadingImage?.url" alt="Image" />
+                                    <img loading='lazy'  style={{height:"400px",width:"900px",backgroundSize:"cover"}} src="props?.data?.HeadingImage?.url" alt="Image" />
                                             <a className="news-cat">{props?.data?.Category}</a>
                                         </div>
                                
@@ -31,7 +31,7 @@ const AdminBlogDetailComp = (props) => {
                                             return(
                                                 <div key={index} className="col-md-6">
                                                 <div className="news-img">
-                                                    <img loading='lazy' src={obj?.urls?obj.urls:"assets/img/news/single-news-6.webp"} alt="Image" />
+                                                    <img style={{height:"250px",width:"420px"}} loading='lazy' src={obj?.urls?obj.urls:"assets/img/news/single-news-6.webp"} alt="Image" />
                                                 </div>
                                             </div>
                                             )
