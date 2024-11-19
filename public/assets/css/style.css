@@ -4046,7 +4046,7 @@ select {
 }
 .checkout-box {
     padding: 30px;
-    background-color: var(--bgColor);
+    /* background-color: var(--bgColor); */
     border-radius: 5px;
     margin-bottom: 30px;
 }

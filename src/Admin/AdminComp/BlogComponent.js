@@ -22,7 +22,7 @@ const BlogComponent = (props) => {
                       <div key={index} className="col-xl-6 col-lg-6 col-md-6">
                   <div className="news-card-thirteen">
                     <div className="news-card-img">
-                      <img onClick={()=>openblog(key)} loading='lazy' src={props?.data[key]?.HeadingImage?.url} alt="Iamge" />
+                      <img onClick={()=>openblog(key)} style={{height:"250px",width:"400px",backgroundSize:"cover"}}  loading='lazy' src={props?.data[key]?.HeadingImage?.url} alt="Iamge" />
                       <a onClick={()=>openblog(key)} className="news-cat">{props?.data[key]?.Category}</a>
                     </div>
                     <div className="news-card-info">
@@ -41,7 +41,7 @@ const BlogComponent = (props) => {
                     <div key={index} className="col-xl-6 col-lg-6 col-md-6">
                 <div className="news-card-thirteen">
                   <div className="news-card-img">
-                    <img onClick={()=>openblog(key)} loading='lazy' src={props?.data[key]?.HeadingImage?.url} alt="Iamge" />
+                    <img onClick={()=>openblog(key)}style={{height:"250px",width:"400px",backgroundSize:"cover"}} loading='lazy' src={props?.data[key]?.HeadingImage?.url} alt="Iamge" />
                     <a onClick={()=>openblog(key)} className="news-cat">{props?.data[key]?.Category}</a>
                   </div>
                   <div className="news-card-info">
