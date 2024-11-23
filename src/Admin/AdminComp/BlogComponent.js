@@ -1,14 +1,46 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import Firebase, { storage } from '../../Firebase'
 const BlogComponent = (props) => {
+  const[btndisable,setbtndisable]=useState(false)
+  const[loader,setloader]=useState(false) 
   const navigate=useNavigate()
+
   function openblog(key){
     localStorage.setItem("CurrentBlog",JSON.stringify(key))
     navigate("/AdminBlogDetail")
   }
+  async function Delete(key){
+    try {
+     setbtndisable(true)
+     setloader(true)
+     const user=JSON.parse(localStorage.getItem("Users"))
+     if(!user) return alert("Unauthorized User")
+     if(props.data[key].Images){
+       for(let i=0;i<props.data[key].Images.length;i++){
+         await storage.child(props.data[key].Images[i].paths).delete()        
+       }      
+     }
+     await storage.child(props.data[key].HeadingImage.path).delete()
+     Firebase.child(`Blogs/${user}/${key}`).remove(err=>{
+       if(err) return alert("Something went wrong. Try again later")
+       else return alert("Deleted Successfully")
+     })
+    } catch (error) {
+     return alert("Something went wrong. Try again later")
+    } finally{
+     setbtndisable(false)
+     setloader(false)
+    }
+   }
+
   return (
   <div className="sports-wrap ptb-100">
+     {
+      loader && <div className="preloaders">
+        <div className="loaders"></div>
+      </div>
+    }
     <div className="container">
     <div className="row gx-55 gx-5">
         <div className="col-lg-8">
@@ -30,6 +62,7 @@ const BlogComponent = (props) => {
                       <ul className="news-metainfo list-style">
                         <li><i className="fi fi-rr-calendar-minus" /><a onClick={()=>openblog(key)}>{`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`}</a></li>
                         <li><i className="fi fi-rr-user"/>By:-{props?.data[key]?.Author}</li>
+                        <li><button disabled={btndisable} className='btn btn-danger' onClick={()=>Delete(key)}>Delete</button></li>
                       </ul>
                     </div>
                   </div>

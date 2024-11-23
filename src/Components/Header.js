@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const Header = () => {
+const Header = (props) => {
 const[toggle,settoggle]=useState(false)
 const[activeIndex,setActiveIndex]=useState(null);
 const toggleAccordion = (index) => {
@@ -30,13 +30,13 @@ const toggleAccordion = (index) => {
                             <div className="collapse navbar-collapse">
                                 <ul className="navbar-nav mx-auto">
                                     <li className="nav-item">
-                                        <Link to={'/'} className="nav-link active">Home</Link>
+                                        <Link to={'/'} className={props.home?"nav-link active":"nav-link"}>Home</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to={'/Blog'} className="nav-link">Latest Blogs</Link>
+                                        <Link to={'/Blog'} className={props.home?"nav-link blog":"nav-link"}>Latest Blogs</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to={'/Author'} className="nav-link">Authors</Link>
+                                        <Link to={'/Author'} className={props.author?"nav-link active":"nav-link"}>Authors</Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link className="dropdown-toggle nav-link">Pages</Link>
@@ -47,7 +47,7 @@ const toggleAccordion = (index) => {
                                         </ul>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to={'/Login'} className="nav-link">
+                                        <Link to={'/Login'} className={props.login?"nav-link active":"nav-link"}>
                                             Login
                                         </Link>
                                     </li>
