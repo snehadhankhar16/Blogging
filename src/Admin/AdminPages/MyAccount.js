@@ -6,7 +6,7 @@ import MyAccountcomp from '../AdminComp/MyAccountcomp'
 const MyAccount = () => {
   return (
     <div>
-      <AdminHeader/>
+      <AdminHeader  myaccount="active"/>
       <MyAccountcomp/>
       <AdminFooter/>
     </div>

@@ -8,6 +8,7 @@ const AdminBlogDetail = () => {
   const navigate=useNavigate()
   const[data,setdata]=useState(null)
   const {fetchblogs}=useContext(AdminBlogContext)
+  const[current,setcurrent]=useState(null)
   useEffect(()=>{
     if(fetchblogs){
       const currentblog=JSON.parse(localStorage.getItem("CurrentBlog"))
@@ -17,13 +18,14 @@ const AdminBlogDetail = () => {
       const result=Object.keys(fetchblogs).filter((key)=>key===currentblog)  
       if(result.length===0) return navigate("/Blogs")
       setdata(fetchblogs[currentblog]);  
+      setcurrent(currentblog)
     }
   },[fetchblogs])
   return (
     <div>
-        <AdminHeader/>
+        <AdminHeader  blog="active"/>
         <Suspense fallback={<div className='preloaders'><div className='loaders'></div></div>}>
-        <AdminBlogDetailComp data={data}/>
+        <AdminBlogDetailComp alldata={fetchblogs} current={current}  data={data}/>
         </Suspense>
         <AdminFooter/>
     </div>

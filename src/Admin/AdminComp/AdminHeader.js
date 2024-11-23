@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-const AdminHeader = () => {
+const AdminHeader = (props) => {
 const[toggle,settoggle]=useState(false)
 
 const navigate=useNavigate()
@@ -35,13 +35,13 @@ function Logout()
                             <div className="collapse navbar-collapse">
                                 <ul className="navbar-nav mx-auto">
                                     <li className="nav-item">
-                                        <Link to={'/Blogs'} className="nav-link active">Our Blogs</Link>
+                                        <Link to={'/Blogs'} className={props.blog?"nav-link active":"nav-link"}>Our Blogs</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to={'/AddBlog'} className="nav-link">Add Blog</Link>
+                                        <Link to={'/AddBlog'} className={props.addblog?"nav-link active":"nav-link"}>Add Blog</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to={'/MyAccount'} className="nav-link">My Account</Link>
+                                        <Link to={'/MyAccount'} className={props.myaccount?"nav-link active":"nav-link"}>My Account</Link>
                                     </li>
                                     <li className="nav-item">
                                         <a onClick={Logout} className="nav-link">

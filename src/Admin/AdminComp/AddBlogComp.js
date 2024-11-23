@@ -66,7 +66,7 @@ const AddBlogComp = () => {
              count++
             }
             else{
-             if(ext[1]==="png" || ext[1]==="PNG" || ext[1]==="jpg" || ext[1]==="jpeg"){
+             if(ext[1]==="png" || ext[1]==="PNG" || ext[1]==="jpg" || ext[1]==="jpeg" ||ext[1]=="webp"){
                  status.push(file[i])
              }
              else{
