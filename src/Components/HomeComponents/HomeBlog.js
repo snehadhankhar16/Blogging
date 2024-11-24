@@ -3,7 +3,7 @@ import React from 'react'
 const HomeBlog = () => {
   return (
     <div>
-        <div className="container-fluid pb-75">
+       <div className="container-fluid pb-75">
                     <div className="news-col-wrap">
                         <div className="news-col-one">
                             <div className="news-card-two">

@@ -119,7 +119,7 @@ const TrendingNow = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*
         </div>
     )
 }
