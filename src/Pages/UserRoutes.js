@@ -18,7 +18,7 @@ useEffect(()=>{
 
             })
             array.sort((a,b)=>b.Date-a.Date)
-            const newarray=array.slice(0,10)
+            const newarray=array.slice(0,12)
             setstate(newarray)
             let resultingarray=[]
             newarray.map((obj)=>{

@@ -14,7 +14,7 @@ const Home = () => {
         <div>
             <Header/>
             {fetchlatestblogs && fetchlatestblogs.length>3 && <TrendingNow data={fetchlatestblogs}/>}
-            <HomeBlog/>
+            <HomeBlog  data={fetchlatestblogs}/>
             <HomeLatestBlog/>
             <HomeInstaSlider data={fetchlatestimages}/>
             <Footer/>
