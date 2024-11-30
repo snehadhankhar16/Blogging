@@ -31,6 +31,7 @@ useEffect(()=>{
    setcategory(finalarray);
    
   }
+  else setcategory([])
 },[fetchblogs])
   return (
     <div>

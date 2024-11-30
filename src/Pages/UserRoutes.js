@@ -5,7 +5,10 @@ import { Outlet } from 'react-router-dom'
 const UserRoutes = () => {
 const[state,setstate]=useState([])
 const[images,setimages]=useState([])
+const[loading,setloading]=useState(false)
+const[users,setusers]=useState({})
 useEffect(()=>{
+  setloading(true)
     Firebase.child("Blogs").on("value",function(snap){
         if(snap.val()){
             let array=[]
@@ -36,9 +39,14 @@ useEffect(()=>{
         }
         
     })
+    Firebase.child("Users").on("value",function(snap){
+      if(snap.val()) return setusers(snap.val())
+      else return setusers({})
+    })
+    setTimeout(()=>setloading(false),2000)
 },[])
   return (
-    <UserContext.Provider value={{"fetchlatestblog":state,"fetchlatestimages":images}}>
+    <UserContext.Provider value={{"fetchlatestblog":state,"fetchlatestimages":images,"users":users,"loading":loading}}>
     <Outlet/>
     </UserContext.Provider>
   )

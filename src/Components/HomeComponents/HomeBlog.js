@@ -11,7 +11,7 @@ function getData(start, end) {
 return props?.data?.map((obj, index) => {
 if (index >= start && end >= index) {
     return (
-            <div className="news-card-three">
+            <div key={index} className="news-card-three">
                 <div className="news-card-img">
                     <img loading='lazy' style={{ height: "120px", width: "200px" }} src={obj?.HeadingImage?.url} alt="Image" />
                 </div>
@@ -32,7 +32,7 @@ if (index >= start && end >= index) {
         return props?.data?.map((obj, index) => {
             if (index >= start && end >= index) {
                 return (
-                    <div className="news-card-five">
+                    <div key={index} className="news-card-five">
                         <div className="news-card-img">
                             <img loading='lazy' style={{ height: "100%", width: "100%" }} src={obj?.HeadingImage?.url ? obj?.HeadingImage?.url : "assets/img/news/news-60.webp"} alt="Image" />
                             <a className="news-cat">{obj?.Category}</a>
@@ -41,7 +41,7 @@ if (index >= start && end >= index) {
                             <h3><a href="#">{obj?.Title}</a></h3>
                             <p>{obj.Description.slice(0, 100) + "..."}</p>
                             <ul className="news-metainfo list-style">
-                                <li><i className="fi fi-rr-calendar-minus" /><a href="#">{getDate(obj?.Date)}</a></li>
+                                <li><i className="fi fi-rr-calendar-minus" /><a href="#">{getDate(props?.data[4]?.Date)}</a></li>
                                 <li><i className="fi fi-rr-user" />{obj?.Author}</li>
                             </ul>
                         </div>

@@ -6,7 +6,7 @@ import BlogComp from '../Components/BlogComponents/BlogComp'
 const Blog = () => {
   return (
     <div>
-        <Header/>
+        <Header blog="active"/>
         <BlogComp/>
         <Footer/>
     </div>

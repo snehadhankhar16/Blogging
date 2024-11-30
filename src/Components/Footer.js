@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Footer = () => {
+    const navigate=useNavigate()
   return (
     <div>
         <div className="container-fluid">
@@ -12,7 +14,7 @@ const Footer = () => {
                             <div className="col-lg-4 text-center" />
                             <div className="col-lg-4">
                                 <div className="footer-right">
-                                    <button className="subscribe-btn" data-bs-toggle="modal" data-bs-target="#newsletter-popup">Sign
+                                    <button onClick={()=>navigate("/Login")}  className="subscribe-btn" data-bs-toggle="modal" data-bs-target="#newsletter-popup">Sign
                                         in<i className="flaticon-right-arrow" /></button>
                                     <p>Get all the latest posts delivered straight to your inbox.</p>
                                 </div>

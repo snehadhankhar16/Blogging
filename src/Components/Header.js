@@ -33,13 +33,13 @@ const toggleAccordion = (index) => {
                                         <Link to={'/'} className={props.home?"nav-link active":"nav-link"}>Home</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to={'/Blog'} className={props.home?"nav-link blog":"nav-link"}>Latest Blogs</Link>
+                                        <Link to={'/Blog'} className={props.blog?"nav-link active":"nav-link"}>Latest Blogs</Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link to={'/Author'} className={props.author?"nav-link active":"nav-link"}>Authors</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="dropdown-toggle nav-link">Pages</Link>
+                                    <Link className={props.page?"dropdown-toggle nav-link active":"dropdown-toggle nav-link"}>Pages</Link>
                                         <ul className="dropdown-menu">
                                             <li className="nav-item"><Link to={'/Privacy'} className="nav-link">Privacy Policy</Link></li>
                                             <li className="nav-item"><Link to={'/TermsandCondition'} className="nav-link">Terms &amp; Conditions</Link></li>

@@ -59,12 +59,12 @@ const TrendingNow = (props) => {
                                                         <SwiperSlide key={index}>
                                             <div className=" news-card-one">
                                                 <div className="news-card-img">
-                                                    <img style={{height:"100px",width:"110px",borderRadius:"50%"}} src={obj?.HeadingImage?.url?obj?.HeadingImage?.url:"assets/img/news/trending-1.webp"} alt="Climate Change" />
+                                                    <img loading='lazy' style={{height:"100px",width:"110px",borderRadius:"50%"}} src={obj?.HeadingImage?.url?obj?.HeadingImage?.url:"assets/img/news/trending-1.webp"} alt="Climate Change" />
                                                 </div>
                                                 <div className="news-card-info">
                                                     <h3><a href="#">{obj.Title}</a></h3>
                                                     <ul className="news-metainfo list-style">
-                                                        <li><i className="fi fi-rr-clock-three" />{obj.User}</li>
+                                                        <li><i className="fi fi-rr-clock-three" />{obj.Author}</li>
                                                     </ul>
                                                 </div>
                                             </div>
