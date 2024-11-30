@@ -4724,7 +4724,7 @@ select {
 .author-box {
     display: flex;
     flex-wrap: wrap;
-    padding: 50px;
+    padding: 20px;
     border-radius: 5px;
     border: 1px solid #eee;
     background-color: var(--whiteColor);
@@ -4738,8 +4738,8 @@ select {
     border-radius: 50%;
 }
 .author-box .author-info {
-    width: calc(100% - 180px);
-    margin-left: 30px;
+    width: calc(66% - 180px);
+    /*margin-left: 300px;*/
 }
 .author-box .author-info h4 {
     font-size: 30px;
