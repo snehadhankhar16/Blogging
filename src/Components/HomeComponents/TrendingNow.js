@@ -2,7 +2,9 @@ import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css'
+import { useNavigate } from 'react-router-dom';
 const TrendingNow = (props) => {
+const navigate=useNavigate()    
     return (
         <div>
             <div className="container-fluid">

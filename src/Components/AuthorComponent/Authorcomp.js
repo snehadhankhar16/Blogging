@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const Authorcomp = ({users}) => {
-    const navigate=useNavigate
+    const navigate=useNavigate()
     return (
         <div>
             <div className="container ptb-100">

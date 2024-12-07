@@ -18,6 +18,7 @@ import BlogShow from './Admin/AdminPages/BlogShow'
 import AdminBlogDetail from './Admin/AdminPages/AdminBlogDetail'
 import MyAccount from './Admin/AdminPages/MyAccount'
 import UserRoutes from './Pages/UserRoutes'
+
 const App = () => {
   return (
     <div className='theme-dark'>
@@ -46,6 +47,7 @@ const App = () => {
           
         </Routes>
       </BrowserRouter>
+    
     </div>
   )
 }

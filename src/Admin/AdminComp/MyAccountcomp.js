@@ -6,6 +6,7 @@ import AdminBlogContext from '../Context/AdminBlogContext'
 const MyAccountcomp = (props) => {
   const [image, setimage] = useState(null)
   const [btndisable, setbtndisable] = useState(false)
+  const[loader,setloader]=useState(false)
   const navigate = useNavigate()
   const { fetchblogs } = useContext(AdminBlogContext)
   const upload = (event) => {
@@ -24,6 +25,7 @@ const MyAccountcomp = (props) => {
     try {
       e.preventDefault()
       setbtndisable(true)
+      setloader(true)
       if (!image) return alert("Upload your ProfileImage first")
       const user = JSON.parse(localStorage.getItem("Users"))
       if (!user) {
@@ -46,12 +48,16 @@ const MyAccountcomp = (props) => {
       return alert("Something Went Wrong. Try again later")
     } finally {
       setbtndisable(false)
-      setimage({})
+      setimage(null)
+      setloader(false)
     }
   }
   return (
     <div>
       <div className="author-wrap">
+      {
+       loader && <div className='preloaders'><div className='loaders'></div></div>
+      }
         {props?.user?.ProfileImage ? <div className="container">
           <div className="author-box">
             <div className="author-img">

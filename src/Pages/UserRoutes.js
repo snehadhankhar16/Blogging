@@ -7,6 +7,7 @@ const[state,setstate]=useState([])
 const[images,setimages]=useState([])
 const[loading,setloading]=useState(false)
 const[users,setusers]=useState({})
+const[alldata,setalldata]=useState([])
 useEffect(()=>{
   setloading(true)
     Firebase.child("Blogs").on("value",function(snap){
@@ -14,12 +15,16 @@ useEffect(()=>{
             let array=[]
             Object.keys(snap.val()).map((user)=>{
                 Object.keys(snap.val()[user]).map((key)=>{
+                  if(snap.val()[user][key].Status=="Active"){
                     const object=snap.val()[user][key]
+                    object.Blogkey=key
                     object.User=user
                     array.push(object);
+                  }
                 })
 
             })
+            setalldata(array)
             array.sort((a,b)=>b.Date-a.Date)
             const newarray=array.slice(0,12)
             setstate(newarray)
@@ -35,7 +40,7 @@ useEffect(()=>{
         else{
           setstate([])
           setimages([])
-        
+          setalldata([])
         }
         
     })
@@ -46,7 +51,7 @@ useEffect(()=>{
     setTimeout(()=>setloading(false),2000)
 },[])
   return (
-    <UserContext.Provider value={{"fetchlatestblog":state,"fetchlatestimages":images,"users":users,"loading":loading}}>
+    <UserContext.Provider value={{"fetchlatestblogs":state,"fetchlatestimages":images,"users":users,"loading":loading,"alldata":alldata}}>
     <Outlet/>
     </UserContext.Provider>
   )

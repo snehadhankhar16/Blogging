@@ -147,14 +147,7 @@ const BlogComp = () => {
       </div>
       <div className="col-lg-4">
         <div className="sidebar">
-          <div className="sidebar-widget-two">
-            <form action="#" className="search-box-widget">
-              <input type="search" placeholder="Search" />
-              <button type="submit">
-                <i className="fi fi-rr-search" />
-              </button>
-            </form>
-          </div>
+         
           <div className="sidebar-widget">
             <h3 className="sidebar-widget-title">Categories</h3>
             <ul className="category-widget list-style">

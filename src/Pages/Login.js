@@ -1,50 +1,50 @@
-import React, { useState } from 'react'
+import React,{useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { auth } from '../Firebase'
-const Login = () => {
-const[Obj,SetObj]=useState({})
-const[btndisable,setbtndisable]=useState(false)
-const[loader,setloader]=useState(false)
-const navigate=useNavigate()
+import Firebase, { auth } from '../Firebase'
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'
+import { jwtDecode } from 'jwt-decode'
 
-function set(event)
-{
-    SetObj({...Obj,[event.target.name]:event.target.value})
+const Login = () => {
+const[obj,setobj]=useState({})
+const[btndisable,setbtndisable]=useState(false)
+const navigate=useNavigate()
+function set(event){
+  setobj({...obj,[event.target.name]:event.target.value})
 }
-function EmailChange(email)
-{
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(email)
+function EmailCheck(email){
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailPattern.test(email)
 }
-async function Submit(e)
-{
- try{
+async function Submit(e){
+  try {
     e.preventDefault()
     setbtndisable(true)
-    setloader(true)
-    if(!Obj.Email || !Obj.Password)return("Field is empty")
-    const response=EmailChange(Obj.Email)
-    if(!response) return alert("Email isn't valid ")
-
-    const result=await auth.signInWithEmailAndPassword(Obj.Email,Obj.Password)
-    localStorage.setItem("Users",JSON.stringify(result.user.uid))
-    SetObj({})
-    navigate("/Blogs")
- }catch(error){
-  return alert("Invalid credentials")
- }
- finally{
+    if(!obj.Email || !obj.Password) return alert("Field is Empty")
+    const response=EmailCheck(obj.Email)
+    if(!response) return alert("Email is not valid")
+      
+   const result=await auth.signInWithEmailAndPassword(obj.Email,obj.Password)
+   localStorage.setItem("Users",JSON.stringify(result.user.uid))
+   setobj({})
+   navigate("/Blogs")
+  } catch (error) {
+    return alert("Invalid Credentials")
+  } finally{
     setbtndisable(false)
-    setloader(false)
- }
-}//submit fun close
-
-  
+  }
+}
+function create(e){
+   const result= jwtDecode(e.credential)
+   Firebase.child("Users").child(result.sub).set({Email:result.email,Name:result.name,ProfileImage:{url:result.picture}},err=>{
+    if(err) return alert("Something went wrong. Try again later")
+    else{
+        localStorage.setItem("Users",JSON.stringify(result.sub))
+        return navigate("/Blogs")
+    }
+   })
+}
     return (
         <div className="login-wrap">
-      {
-        loader && <div className='preloaders'><div className='loaders'></div></div>
-      }
                 <div className="login-bg">
                     <Link to="/" className="navbar-brand">
                         <img className="logo-light" src="assets/img/logo-white.webp" alt="Image" />
@@ -56,19 +56,21 @@ async function Submit(e)
                     <div className="login-form">
                         <h3>Welcome Back</h3>
                         <div className="alt-login">
-                            <a style={{width:"100%"}} href="https://www.gmail.com/"><img src="assets/img/icons/google.svg" alt="Image" />Login With
-                                Google</a>
+                            <GoogleOAuthProvider clientId='608709544525-6avnnijjjdq335l9g4matpbgm5hbkm34.apps.googleusercontent.com'>
+                                <GoogleLogin useOneTap={true} onSuccess={create}></GoogleLogin>
+                            </GoogleOAuthProvider>
+                            {/* <a style={{width:"100%"}} href="https://www.gmail.com/"><img src="assets/img/icons/google.svg" alt="Image" />Login With
+                                Google</a> */}
                         </div>
                         <div className="text-center">
                             <span className="or-text">OR</span>
                         </div>
                         <form action="#">
-                            
                             <div className="form-group">
-                                <input type="email" value={Obj.Email?Obj.Email:""} name='Email' onChange={set} placeholder="Email Address" />
+                                <input type="email" value={obj.Email?obj.Email:""} name='Email' onChange={set} placeholder="Email Address" />
                             </div>
                             <div className="form-group">
-                                <input type="password" value={Obj.Password?Obj.Password:""} name='Password' onChange={set} placeholder="Password" />
+                                <input type="password" value={obj.Password?obj.Password:""} name='Password' onChange={set} placeholder="Password" />
                             </div>
                             <div className="row">
                                 <div className="col-6">
@@ -80,7 +82,7 @@ async function Submit(e)
                                     </div>
                                 </div>
                                 <div className="col-6 text-end">
-                                    <a href="login.html">Forgot Password</a>
+                                    <a href="#">Forgot Password</a>
                                 </div>
                             </div>
                             <button onClick={Submit} disabled={btndisable} type="submit" className="btn-two w-100 d-block">Login</button>
@@ -91,5 +93,4 @@ async function Submit(e)
         </div>
     )
 }
-
 export default Login

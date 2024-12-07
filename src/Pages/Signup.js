@@ -91,7 +91,7 @@ const Signup = () => {
           <input type="password" name='ConfirmPassword' value={Obj.ConfirmPassword?Obj.ConfirmPassword:""} onChange={set} placeholder="Confirm Password" />
         </div>
         <button disabled={btndisable} type="submit" onClick={Submit} className="btn-two w-100 d-block">Create Account</button>
-        <p className="login-text">Already have an account?<a href="login.html">Login</a></p>
+        <p className="login-text">Already have an account?<a href="#">Login</a></p>
       </form>
     </div>
   </div>

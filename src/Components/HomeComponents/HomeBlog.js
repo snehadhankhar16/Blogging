@@ -1,7 +1,6 @@
 import React from 'react'
 const HomeBlog = (props) => {
- 
- function getDate(date) {
+     function getDate(date) {
  if (!date) return "---"
  const d = new Date(date)
  return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`
@@ -19,7 +18,7 @@ if (index >= start && end >= index) {
                  <a className="news-cat">{obj?.Category}</a>
                  <h3><a href="#">{obj?.Title}</a></h3>
                  <ul className="news-metainfo list-style">
-                 <li><i className="fi fi-rr-calendar-minus" /><a href="#">{getDate(obj.Date)}</a></li>
+                 <li><i className="fi fi-rr-calendar-minus" /><a href="#">{getDate(obj?.Date)}</a></li>
                  <li><i className="fi fi-rr-user" />{obj?.Author}</li>
                 </ul>
                 </div>
